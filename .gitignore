@@ -132,3 +132,6 @@ dmypy.json
 # Ignoring this file so that base file (dev or prod) can be copied to it
 # and not need to be committed. 
 docker-compose.yml
+
+#django-react-mysql boilerplate
+init.sql
