@@ -1,14 +1,9 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.db.models.fields import AutoField
 from django.utils.translation import gettext as _
 
 User = get_user_model()
-
-
-class Note(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = models.TextField(blank=True)
 
 
 class Book(models.Model):
@@ -35,3 +30,20 @@ class Book(models.Model):
         max_length=2, choices=Testament.choices, default=Testament.OLD_TESTAMENT)
     canonical_order = models.PositiveSmallIntegerField(default=1)
     chronological_order = models.PositiveSmallIntegerField(default=1)
+
+    def __str__(self):
+        return self.name
+
+
+class Note(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=50, blank=True)
+    reference = models.CharField(max_length=20, blank=True)
+    content = models.TextField(blank=True)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, default=1)
+    sort_order = models.PositiveSmallIntegerField(default=1)
+
+    def __str__(self):
+        return self.title
